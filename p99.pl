@@ -1,3 +1,5 @@
+% Lists
+
 % P01
 % Find last element in list
 last([X], X).
@@ -52,3 +54,28 @@ range(N, K, [N|L]) :-
   N =< K,
   N1 is N+1,
   range(N1, K, L).
+
+% Binary Trees
+
+% P54
+% Check whether a given term is a binary tree
+% Empty Tree = nil
+% Non-empty Tree = tree(T1, X, T2)
+%   where T1 and T2 are subtrees.
+isTree(nil).
+isTree(tree(T1, _, T2)) :-
+  isTree(T1),
+  isTree(T2).
+
+% P57
+% Construct a binary search tree from list
+construct(L, T) :- foldl([X,Y,Z]>>insert(Y, X, Z), L, nil, T).
+
+insert(nil, X, tree(nil, X, nil)).
+insert(tree(T1, X, T2), X, tree(T1, X, T2)).
+insert(tree(T1, Y, T2), X, tree(T3, Y, T2)) :-
+  X < Y,
+  insert(T1, X, T3).
+insert(tree(T1, Y, T2), X, tree(T1, Y, T3)) :-
+  X > Y,
+  insert(T2, X, T3).
